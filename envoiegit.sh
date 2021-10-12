@@ -1,4 +1,4 @@
 #!/bin/bash
 git add .
-git commit -m "résolution de mon exercice (ce message peut être personalisé)"
+git commit -m $1
 git push origin master
