@@ -1,0 +1,26 @@
+
+####
+#### Compilation
+####
+cc     chiffrement.c   -o chiffrement
+
+####
+#### Test entrée/sortie : test-0
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./chiffrement
+veprcz fc gkcjh tbkdea yj jjlc smesi zjk wjxc
+ 
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff end
+/tmp/tps-c.out.29023
+LINEC: 1 -
+ 
+1c1
+<  
+---
+> portez ce vieux whisky au juge blond qui fume
