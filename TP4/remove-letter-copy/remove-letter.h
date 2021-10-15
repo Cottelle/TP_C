@@ -9,12 +9,6 @@ char *removeLetter(char *stre,char c){
         return NULL;
     }
     else{
-        if (i==0){
-            free(strs);
-            char *strs=malloc(1);
-            strs[0]='\0';
-            return strs;}
-        else{
     int k=0;
     int j;
     for(j=0;stre[j]!='\0';j++){
@@ -29,4 +23,3 @@ char *removeLetter(char *stre,char c){
     return strs;
 }
 }
-    }
