@@ -1,0 +1,96 @@
+
+####
+#### Compilation
+####
+
+####
+#### Test 1
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./damier
+#.
+.#
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff end
+/tmp/tps-c.out.18812
+LINEC: 2 -
+#.
+.#
+
+####
+#### Test 2
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./damier
+#.#.
+.#.#
+#.#.
+.#.#
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff end
+/tmp/tps-c.out.18812
+LINEC: 4 -
+#.#.
+.#.#
+#.#.
+.#.#
+
+####
+#### Test 3
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./damier
+#
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff end
+/tmp/tps-c.out.18812
+LINEC: 1 -
+#
+
+####
+#### Test 4
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./damier
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff end
+/tmp/tps-c.out.18812
+LINEC: 11 -
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
+.#.#.#.#.#.
+#.#.#.#.#.#
