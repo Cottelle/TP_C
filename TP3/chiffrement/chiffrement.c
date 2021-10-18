@@ -3,8 +3,8 @@
 
 
 int main(void){
-    char * str;
-    fgetc(str,100,stdin);
+    char str[1000];
+    fgets(str,1000,stdin);
     for(int i=0;str[i]!='\0';i++){
         switch (str[i])
         {
@@ -14,48 +14,83 @@ int main(void){
         case 'c':
             printf("e");
             break;
-        case 'r':
-            printf("t");
-            break;
         case 'y':
             printf("a");
             break;
         case 'm':
             printf("l");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'l':
+            printf("g");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'e':
+            printf("o");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'd':
+            printf("s");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'r':
+            printf("t");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'k':
+            printf("i");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'x':
+            printf("m");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'v':
+            printf("p");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'n':
+            printf("b");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'i':
+            printf("d");
             break;
-        case /* constant-expression */:
-            /* code */
+        case 'b':
+            printf("h");
             break;
+        case 'w':
+            printf("f");
+            break;
+        case 'p':
+            printf("r");
+            break;
+        case 'q':
+            printf("z");
+            break;
+        case 'h':
+            printf("x");
+            break;
+        case 't':
+            printf("w");
+            break;
+        case 'j':
+            printf("u");
+            break;
+        case 'u':
+            printf("j");
+            break;
+        case 'z':
+            printf("q");
+            break;
+        case 'g':
+            printf("v");
+            break;
+        case 'o':
+            printf("k");
+            break;
+        case 'a':
+            printf("y");
+            break;
+        case 's':
+            printf("n");
+            break;
+        
         
         
         default:
+        printf("%c",str[i]);
             break;
         }
     }
