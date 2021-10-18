@@ -1,0 +1,5 @@
+
+####
+#### Compilation
+####
+cc     damier.c  -ltps -lSDL2 -lSDL2_ttf -o damier
