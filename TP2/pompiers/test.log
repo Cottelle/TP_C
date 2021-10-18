@@ -1,0 +1,53 @@
+
+####
+#### Compilation
+####
+
+####
+#### Test entrée/sortie : test-0
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./pompiers
+OUI
+NON
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-1
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./pompiers
+NON
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-2
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./pompiers
+NON
+NON
+NON
+OUI
+OUI
+NON
+NON
+NON
+OUI
+OUI
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
