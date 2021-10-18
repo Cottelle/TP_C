@@ -1,0 +1,69 @@
+
+####
+#### Compilation
+####
+
+####
+#### Test entrée/sortie : test-0
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./sacs
+135
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-1
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./sacs
+180
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-2
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./sacs
+135
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-3
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./sacs
+45
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-4
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./sacs
+392625
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
