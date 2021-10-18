@@ -1,0 +1,14 @@
+
+####
+#### Compilation
+####
+gcc -Werror -Wextra -Wall -g -o matrix-In.o -c matrix-In.c
+gcc -Werror -Wextra -Wall -g -o tests.o -c tests.c
+gcc -Werror -Wextra -Wall -g -o tests matrix-In.o tests.o
+
+####
+#### Execution
+####
+test_error_malloc_1
+Error 
+assertion failed: mat == NULL [ FAILED ]
