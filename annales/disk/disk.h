@@ -7,7 +7,7 @@ char getxy(int d,int x,int y,char *str){
     return str[y*(d+1)+x-1];
 }
 void changexy(int d, int x,int y,char new,char *str){
-    str[y*(d+1)+x-1]=y;
+    str[y*(d+1)+x-1]=new;
 }
 
 char *disk(int d){
@@ -29,5 +29,9 @@ char *disk(int d){
             }
         }
     }
+    return str;
+}
+
+char *disk_text(char *str){
     return str;
 }
