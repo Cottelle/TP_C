@@ -42,8 +42,8 @@ int main(int argc,char **argv){
         res+=sqrt(pow(H1-H2,2)+pow(D,2))*21534;
         if(H2<H1){
         for(int i=1;i<nbpillier+1;i++){
-            printf("ok\n");
-            res+=(H2-(alpha*i*72))*9047;
+            //printf("ok\n");
+            res+=(H1+(alpha*i*72))*9047;
         }
         }
         if (H1<=H2){
