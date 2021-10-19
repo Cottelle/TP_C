@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv){
+int main(void){
+    char str[1000];
+    fgets(str,1000,stdin);
     int ouv=0;
     int fer=0;
     int count=0;
     int b=0;
-    for(int i=0;i<argc && b==0;i++){
-        for(int j=0;argv[j][i]!='\0';j++){
-            if (argv[j][i]=='{'){
+    for(int j=0;str[j]!='\0';j++){
+            if (str[j]=='{'){
                 ouv++;
             }
-            if (argv[j][i]=='}'){
+            if (str[j]=='}'){
                 fer++;
             }
             if (ouv-fer<0){
@@ -22,7 +23,6 @@ int main(int argc, char **argv){
 
         }
 
-    }
     if (b==0){
         return 0;
     }

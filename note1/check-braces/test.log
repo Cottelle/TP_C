@@ -10,4 +10,22 @@
 #### Execution
 #### valgrind -q --leak-check=full --error-exitcode=43 ./check-braces
 
-==> exitcode: 139
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-1
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./check-braces
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+0a1,2
+> abc } def
+>     ^ cette accolade fermante est en trop.
