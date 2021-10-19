@@ -1,0 +1,51 @@
+
+####
+#### Compilation
+####
+
+####
+#### Test erreur 1
+####
+
+####
+#### Test erreur 2
+####
+
+####
+#### Test arguments/sortie : test-0
+####
+
+####
+#### Test arguments/sortie : test-1
+####
+
+####
+#### Test arguments/sortie : test-2
+####
+
+####
+#### Test arguments/sortie : test-3
+####
+
+####
+#### Test arguments/sortie : test-4
+####
+
+####
+#### Test arguments/sortie : test-5
+####
+
+####
+#### Test arguments/sortie : test-6
+####
+
+####
+#### Test arguments/sortie : test-7
+####
+1c1,4
+< 6091096
+---
+> ok
+> ok
+> ok
+> 6093125
