@@ -24,9 +24,14 @@ int main(void){
         }
 
     if (b==0){
+        if(ouv==fer){
         return 0;
+        }
+        else{
+            printf("Il manque au moins un accolade ouvrante.\n");
+        }
     }
-    else{
+    else {
         for(int i=0;str[i]!='\0';i++){
             printf("%c",str[i]);
         }
