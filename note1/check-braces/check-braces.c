@@ -26,6 +26,16 @@ int main(void){
     if (b==0){
         return 0;
     }
+    else{
+        for(int i=0;str[i]!='\0';i++){
+            printf("%c",str[i]);
+        }
+        printf("\n");
+        for(int i=0;i<count;i++){
+            printf(" ");
+        }
+        printf("^ cette accolade fermante est en trop.\n");
+    }
 
     return 0;
 }

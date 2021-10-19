@@ -21,11 +21,25 @@
 
 #### Execution
 #### valgrind -q --leak-check=full --error-exitcode=43 ./check-braces
+abc } def
+
+    ^ cette accolade fermante est en trop.
 
 ==> exitcode: 0
 
 #### Comparaison
 #### diff
-0a1,2
-> abc } def
->     ^ cette accolade fermante est en trop.
+
+####
+#### Test entrée/sortie : test-2
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./check-braces
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+0a1
+> Il manque au moins un accolade ouvrante.
