@@ -24,7 +24,7 @@ int test(const unsigned long long *T,int n){
     return BOB;
 } 
 
-int main(void){
+int mai(void){
     for(long int i=0;i<1000000;i++){
         if(estpremier(i)){
             printf("%li est premier \n",i);

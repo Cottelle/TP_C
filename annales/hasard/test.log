@@ -1,0 +1,13 @@
+
+####
+#### Compilation
+####
+rm -rf *.o
+gcc -o tests.o -c tests.c -lm
+gcc -o test-tab.o -c test-tab.c -lm
+gcc -o tests tests.o test-tab.o -lm
+
+####
+#### Execution
+####
+Victoire!!!

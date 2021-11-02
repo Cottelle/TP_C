@@ -1,0 +1,75 @@
+
+####
+#### Compilation
+####
+gcc -o tests.o -c tests.c 
+gcc -o linked-list.o -c linked-list.c 
+gcc -o tests linked-list.o tests.o 
+
+####
+#### Execution avec Valgrind
+####
+==10574== Invalid read of size 4
+==10574==    at 0x109355: ll_get (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x1099A7: test_prepend (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A1A5: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==10574== 
+==10574== 
+==10574== Process terminating with default action of signal 11 (SIGSEGV)
+==10574==  Access not within mapped region at address 0x0
+==10574==    at 0x109355: ll_get (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x1099A7: test_prepend (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A1A5: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==  If you believe this happened as a result of a stack
+==10574==  overflow in your program's main thread (unlikely but
+==10574==  possible), you can try to increase the size of the
+==10574==  main thread stack using the --main-stacksize= flag.
+==10574==  The main thread stack size used in this run was 8388608.
+test_create
+Done
+test_append
+Done
+test_append2
+Done
+test_malloc_error
+Done
+test_size
+Done
+==10574== 8 bytes in 1 blocks are definitely lost in loss record 2 of 13
+==10574==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10574==    by 0x109217: ll_create (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x109506: test_create (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A0BF: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574== 
+==10574== 8 bytes in 1 blocks are definitely lost in loss record 3 of 13
+==10574==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10574==    by 0x1093F0: ll_prepend (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10994F: test_prepend (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A1A5: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574== 
+==10574== 40 (8 direct, 32 indirect) bytes in 1 blocks are definitely lost in loss record 7 of 13
+==10574==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10574==    by 0x109217: ll_create (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x109561: test_append (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A0ED: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574== 
+==10574== 320 (16 direct, 304 indirect) bytes in 1 blocks are definitely lost in loss record 11 of 13
+==10574==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10574==    by 0x109277: ll_append (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x1098EE: test_prepend (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A1A5: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574== 
+==10574== 328 (8 direct, 320 indirect) bytes in 1 blocks are definitely lost in loss record 12 of 13
+==10574==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10574==    by 0x109217: ll_create (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10966C: test_append2 (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A11B: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574== 
+==10574== 328 (8 direct, 320 indirect) bytes in 1 blocks are definitely lost in loss record 13 of 13
+==10574==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10574==    by 0x109217: ll_create (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x1097A1: test_size (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574==    by 0x10A177: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/TP6/list-makefile-2/tests)
+==10574== 
+Segmentation fault (core dumped)

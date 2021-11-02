@@ -1,16 +1,13 @@
-all: tests
+tests: tests.o test-tab.o
+	gcc -o tests tests.o test-tab.o -lm
 
-tests : test-tab1.o test-tab2.o tests.o
-	gcc -o tests tests.o test-tab1.o test-tab2.o
+tests.o: tests.c
+	gcc -o tests.o -c tests.c -lm
 
-test-tab2.o : test-tab.c
-	gcc -o test-tab2.o -c test-tab.c  
+test-tab.o: test-tab.c
+	gcc -o test-tab.o -c test-tab.c -lm
 
-test-tab1.o : test-tab.h
-	gcc -o test-tab1.o -c test-tab.h
 
-tests.o : tests.c
-	gcc -o tests.o -c tests.c 
 	
 clean :
 	rm -rf *.o
