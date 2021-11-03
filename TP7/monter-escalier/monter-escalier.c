@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-    int countesc(int n){
-        if(n==1 || n==2){
-            return n;
+    int countesc(int n){                //pas optimal il faudrait faire une liste des countesc deja calculer
+        int tab[n];
+        tab[0]=1;
+        tab[1]=2;
+        int i =1;
+        while (i<n){
+        i++;
+        tab[i]=tab[i-1]+tab[i-2];
         }
-        return (countesc(n-1)+countesc(n-2));
+        return tab[n-1];
     }
 
 int main(int argc, char **argv ){
