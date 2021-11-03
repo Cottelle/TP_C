@@ -1,0 +1,30 @@
+
+####
+#### Compilation
+####
+
+####
+#### Test entrée/sortie : test-0
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./pyramide
+23
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
+
+####
+#### Test entrée/sortie : test-1
+####
+
+#### Execution
+#### valgrind -q --leak-check=full --error-exitcode=43 ./pyramide
+31446839753
+
+==> exitcode: 0
+
+#### Comparaison
+#### diff
