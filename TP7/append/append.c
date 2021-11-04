@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tps_unit_test.h"
+#include "append.h"
 
 int append(int ** tab, size_t *size, int value){
     if (tab == NULL || size==NULL){
