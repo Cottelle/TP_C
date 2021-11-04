@@ -1,0 +1,15 @@
+
+####
+#### Compilation
+####
+make: « tests » est à jour.
+
+####
+#### Execution
+####
+test_example_1
+Done
+test_example_2
+Done
+test_error_malloc
+Done
