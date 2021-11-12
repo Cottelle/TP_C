@@ -1,18 +1,13 @@
-==16089== Invalid write of size 1
-==16089==    at 0x109326: changexy (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
-==16089==    by 0x1094D9: disk (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
-==16089==    by 0x1095F7: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
-==16089==  Address 0x4a5707f is 1 bytes before a block of size 20 alloc'd
-==16089==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16089==    by 0x109366: disk (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
-==16089==    by 0x1095F7: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
-==16089== 
-==16089== Conditional jump or move depends on uninitialised value(s)
-==16089==    at 0x483EF58: strlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==16089==    by 0x48E85B3: puts (ioputs.c:35)
-==16089==    by 0x10961E: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
-==16089== 
-## 
+==18971== Invalid read of size 1
+==18971==    at 0x483EF54: strlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18971==    by 0x48E95B3: puts (ioputs.c:35)
+==18971==    by 0x10961B: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
+==18971==  Address 0x4a58094 is 0 bytes after a block of size 20 alloc'd
+==18971==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==18971==    by 0x109363: disk (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
+==18971==    by 0x1095F4: main (in /home/mcollette/Documents/1A/Algorithme_Programmation/MesExercicesC/annales/disk/tests)
+==18971== 
+ ## 
 ####
 ####
  ## 

@@ -1,0 +1,11 @@
+
+####
+#### Compilation
+####
+make: « main » est à jour.
+
+####
+#### Test entrée/sortie : test-0
+####
+dist=0
+porte 0
