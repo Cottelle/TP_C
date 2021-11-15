@@ -10,5 +10,5 @@ genereateur.o: genereteur.c
 solveur.o: solveur.c
 	gcc -g -o solveur.o -c solveur.c
 
-clear:
+clean:
 	rm *.o
