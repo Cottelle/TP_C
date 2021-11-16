@@ -1,0 +1,21 @@
+
+####
+#### Compilation
+####
+gcc -o tests.o -c tests.c
+gcc -o checked-int.o -c checked-int.c
+gcc -o tests tests.o checked-int.o
+
+####
+#### Execution avec Valgrind
+####
+test_encode_decode
+Done
+test_encode
+Done
+test_check
+Done
+test_decode_null
+Done
+test_decode_p
+Done
