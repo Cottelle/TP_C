@@ -76,12 +76,36 @@ void ll_free(ll_list *list) {
 void *ll_find(ll_list *list, int (*match)(void*)) {
     (void)list;
     (void)match;
+    if (list==NULL)
+    {
+        return NULL;
+    }
+    ll_node * node = list->first;
+    while (node!=NULL)
+    {
+        if (node->value==NULL)
+        {
+            return NULL;
+        }
+        void * a = node->value;
+        if(match(a))
+        {
+            return a;
+        }
+        node=node->next;
+    }
     return NULL;
 }
 
 int ll_match_positive_int(void *el) {
     (void)el;
+    int *a= el; 
+    if (*a>0)
+    {
+        return 1;
+    }
     return 0;
+    
 }
 
 
@@ -89,17 +113,33 @@ void *ll_find_data(ll_list *list, int (*match)(void*,void*), void *data){
     (void)list;
     (void)match;
     (void)data;
-    return NULL;
+    int motcth(void *a){
+        return match(a,data);
+    }
+    return ll_find(list,motcth);
 }
 
 int ll_match_int_equals(void *el, void *data){
     (void)el;
     (void)data;
+    int *a=el;
+    int *b=data;
+    if(*b== *a)
+    {
+        return 1;
+    }
     return 0;
 }
 
 int ll_match_student(void *el, void *data){
     (void)el;
     (void)data;
+    student_t *moi = el;
+    unsigned long long *num= data;
+    if (moi->id == *num)
+    {
+        return 1;
+    }
+
     return 0;
 }
