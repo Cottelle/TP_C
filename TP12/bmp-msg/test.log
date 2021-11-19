@@ -1,0 +1,39 @@
+
+####
+#### Compilation
+####
+mkdir -p obj
+cc -o obj/encoder.o -c src/encoder.c -Wall -Wextra -Werror -g -I./include
+mkdir -p obj
+cc -o obj/bmp-msg.o -c src/bmp-msg.c -Wall -Wextra -Werror -g -I./include
+mkdir -p obj
+cc -o obj/args-parser.o -c src/args-parser.c -Wall -Wextra -Werror -g -I./include
+mkdir -p obj
+cc -o obj/io-utils.o -c src/io-utils.c -Wall -Wextra -Werror -g -I./include
+mkdir -p bin
+cc -o bin/bmp-msg obj/encoder.o obj/bmp-msg.o obj/args-parser.o obj/io-utils.o -Wall -Wextra -Werror -g -lm -ltps -lSDL2 -lSDL2_ttf
+Linking complete!
+
+####
+#### Execution erreur
+####
+Error while opening the input file 'NEXISTEPAS': No such file or directory
+
+####
+#### Execution erreur 2
+####
+Error while opening the output file '/NEXSTEPAS/OUT.TXT': No such file or directory
+
+####
+#### Execution erreur 3
+####
+encode action requires an input and output file
+
+####
+#### Execution encode
+####
+==27243== Conditional jump or move depends on uninitialised value(s)
+==27243==    at 0x483C9F5: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==27243==    by 0x10981C: cleanOptions (args-parser.c:12)
+==27243==    by 0x1097E3: main (bmp-msg.c:57)
+==27243== 

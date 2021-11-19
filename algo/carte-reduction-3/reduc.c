@@ -97,7 +97,6 @@ int main(void)
     char **str = malloc(N*sizeof(char *));
     for (int i = 0; i < N; i++)
     {
-        printf("%i\n",i);
         str[i]=malloc(7);
         fgets(str[i], 7, stdin);
         str[i][5]='\0';
