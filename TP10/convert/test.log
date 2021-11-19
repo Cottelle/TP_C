@@ -1,0 +1,19 @@
+
+####
+#### Compilation
+####
+cc     convert.c   -o convert
+
+####
+#### Test Erreur 1
+####
+Probleme dans les arguments
+
+####
+#### Test Erreur 2
+####
+Probleme dans les chemins
+
+####
+#### Test 0
+####
