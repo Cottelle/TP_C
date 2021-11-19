@@ -22,28 +22,31 @@ int presencearbre(void *value, arbrebinaire *arbre, int (*compar)(void *, void *
     }
 }
 
-void ajoutearbre (void *value,arbrebinaire *arbre,int (*compar)(void *,void *))
+arbrebinaire * ajoutearbre(void *value,arbrebinaire *arbre,int (*compar)(void *,void *))
     {
     if (arbre == NULL)
     {
-        (arbre)=malloc(sizeof(arbrebinaire));
+        arbre=malloc(sizeof(arbrebinaire));
         if (arbre==NULL)
         {
             free(arbre);
+            fprintf(stderr,"ERREUR");
             exit (1);
         }
         arbre->node=value;
         arbre->gauche=NULL;
         arbre->doite=NULL;
-        return;
+        return arbre ;
     }
     if (compar(value, arbre->node) < 0)
     {
-        return ajoutearbre(value, arbre->gauche, compar);
+        arbre->gauche= ajoutearbre(value, arbre->gauche, compar);
+        return arbre;
     }
     else if (compar(value, arbre->node) >= 0)
     {
-        return ajoutearbre(value, arbre->doite, compar);
+        arbre->doite= ajoutearbre(value, arbre->doite, compar);
+        return arbre;
     }
 }
 arbrebinaire *arbrevide(void)
