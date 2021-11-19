@@ -81,7 +81,3 @@ gcc -o latex-indent latex-indent.o fonction.o
 ####
 #### test-8
 ####
-11c11
-<     \end{center3} \begin{center1} text \end{center1}
----
->   \end{center3} \begin{center1} text \end{center1}

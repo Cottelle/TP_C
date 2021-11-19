@@ -54,7 +54,8 @@ int main(int argc, char **argv)
         startwithend=testdebut (new, "end{");
         if (beginetend <= 0 && startwithend )
         {
-            nbespace = nbespace - 2 * nbend;
+            nbespace = nbespace - 2 * (nbend-nbbegin);
+            nbbegin=0;
         }
         if (nbespace < 0)
         {
