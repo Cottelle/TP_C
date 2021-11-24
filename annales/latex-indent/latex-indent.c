@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     char *test;
     int beginetend;
     int startwithend;
-    while (!feof(entree))
+    while (1)
     {
         test = readline(entree, buffer);
         if (test == NULL)

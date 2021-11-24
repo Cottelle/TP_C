@@ -1,0 +1,25 @@
+
+####
+#### Compilation
+####
+gcc -o tests.o -c tests.c
+gcc -o ca_malloc.o -c ca_malloc.c
+gcc -o tests tests.o ca_malloc.o
+
+####
+#### Execution
+####
+test_ok
+Done
+test_erreur
+Done
+
+####
+#### Execution avec Valgrind
+####
+
+Erreur vous avez fait n'importe quoi avec le pointeur que je vous ai passé, Signé Malloc
+test_ok
+Done
+test_erreur
+Done
