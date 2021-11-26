@@ -1,0 +1,123 @@
+#include "xmlp.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char *TextBeforeTag(char *buffer,int *n)
+{
+    int acc=0;
+    char *text=NULL;
+    char *test=NULL;
+    while (buffer[acc]!='\0' && buffer[acc]!='<')
+    {
+        acc++;
+        test = realloc(text, acc);
+        if (test == NULL)
+        {
+            fprintf(stderr, "Erreur ContentTag : Erreur MAlloc");
+            exit(1);
+        }
+        text=test;
+        text[acc-1]=buffer[acc-1];
+    }
+    test = realloc(text, acc+1);
+        if (test == NULL)
+        {
+            fprintf(stderr, "Erreur ContentTag : Erreur MAlloc");
+            exit(1);
+        }
+    text=test;
+    text[acc]='\0';
+    *n=*n+acc;
+    return text;
+}
+
+char *ContentTag(char *buffer, int *n)
+{
+    int acc = 0;
+    char *content = NULL;
+    char *test = NULL;
+    while (buffer[acc] != '>')
+    {
+        if (buffer[acc] == '\0')
+        {
+            return NULL;
+        }
+        acc++;
+        test = realloc(content, acc);
+        if (test == NULL)
+        {
+            fprintf(stderr, "Erreur ContentTag : Erreur MAlloc");
+            exit(1);
+        }
+        content = test;
+        content[acc - 1] = buffer[acc - 1];
+    }
+    test = realloc(content, acc+1);
+        if (test == NULL)
+        {
+            fprintf(stderr, "Erreur ContentTag : Erreur MAlloc");
+            exit(1);
+        }
+    content=test;
+    content[acc]='\0';
+    *n = *n + acc+1;
+    return content;
+}
+
+parser_error_type_t parse(const char *filename, parser_info_t *info)
+{
+    // void *data = malloc(sizeof(info->data));
+    // *data=(info->data);
+    FILE *file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        fprintf(stderr, "Erreur parse: Impossible d'ouvir le fichier\n");
+        exit(1);
+    }
+    char *fin; //test si c'est la fin du file
+    char *shadow=malloc(101);
+    char *buffer=shadow;
+    buffer[0] = '\0';
+    int a = 0;
+    do
+    {
+        if (a>=50 || buffer[0] == '\0')
+        {
+            a = 0;
+            fin = fgets(buffer, 100, file);
+        }
+        if (buffer[0] != '<')
+        {
+            char *text=TextBeforeTag(buffer,&a);
+            if (text!=NULL)
+            {
+            (info->handleText)(text, info->data);
+            }
+            free(text);
+        }
+        else if (buffer[1] != '/')
+        {
+            a = a + 1;
+            char *content = ContentTag(buffer + 1, &a);
+            if (content != NULL)
+            {
+                (info->handleOpenTag)(content, info->data);
+                free(content);
+            }
+        }
+        else
+        {
+            a = a + 2;
+            char *content = ContentTag(buffer + 2, &a);
+            if (content != NULL)
+            {
+                (info->handleCloseTag)(content, info->data);
+                free(content);
+            }
+        }
+        buffer=buffer + a;
+
+    } while (fin != NULL);
+    free(shadow);
+}
