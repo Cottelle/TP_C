@@ -1,0 +1,12 @@
+Format d'un fichier de sauvegarde:
+game over?
+map_size
+use color?
+length
+frame_duration
+fruit position
+direction
+queue position 1
+queue position 2
+...
+queue position length

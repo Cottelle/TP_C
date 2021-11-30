@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - Couverture - /usr/local/include/tps_stack.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">usr/local/include</a> - tps_stack.h<span style="font-size: 80%;"> (source / <a href="tps_stack.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">Couverture</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-14 13:43:54</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /**</a>
+<span class="lineNum">       2 </span>            : = Librairie TPS - Structure de données: Pile
+<span class="lineNum">       3 </span>            : Quentin Bramas &lt;bramas@unistra.fr&gt;
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : La libraire tps contient aussi des fonctions permettant de créer et manipuler des *piles* contenant des entiers.
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : **Pour pouvoir être utilisée :**
+<span class="lineNum">       8 </span>            : * il faut inclure le fichier d'entête : `tps_stack.h`
+<span class="lineNum">       9 </span>            : * lier les librairies suivantes: `-ltps -lSDL2 -lSDL2_ttf`
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : === Exemple
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : ```c
+<span class="lineNum">      16 </span>            : tps_stack maPile = tps_stack_create();
+<span class="lineNum">      17 </span>            : tps_stack_push(maPile, 15);
+<span class="lineNum">      18 </span>            : tps_stack_push(maPile, 32);
+<span class="lineNum">      19 </span>            : tps_stack_push(maPile, 53);
+<span class="lineNum">      20 </span>            : printf(&quot;%i\n&quot;, tps_stack_top(maPile)); // Affiche 53
+<span class="lineNum">      21 </span>            : printf(&quot;%i\n&quot;, tps_stack_pop(maPile)); // Affiche 53
+<span class="lineNum">      22 </span>            : printf(&quot;%i\n&quot;, tps_stack_pop(maPile));// Affiche 32
+<span class="lineNum">      23 </span>            : ```
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : */
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : #ifndef LIBTPS_STACK_H_INCLUDE
+<span class="lineNum">      28 </span>            : #define LIBTPS_STACK_H_INCLUDE
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : #include &lt;stdio.h&gt;
+<span class="lineNum">      31 </span>            : #include &lt;stdlib.h&gt;
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : struct _tps_stack;
+<span class="lineNum">      36 </span>            : typedef struct _tps_stack* tps_stack;
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span>            : /**
+<span class="lineNum">      40 </span>            : === Description
+<span class="lineNum">      41 </span>            :   Création d'une pile
+<span class="lineNum">      42 </span>            : 
+<span class="lineNum">      43 </span>            :   Retourne une structure `tps_stack`
+<span class="lineNum">      44 </span>            : */
+<span class="lineNum">      45 </span>            : tps_stack tps_stack_create();
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span>            : /**
+<span class="lineNum">      48 </span>            : === Description
+<span class="lineNum">      49 </span>            : Retourne l'élément se trouvant sur le sommet de la pile.
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : === Paramètres
+<span class="lineNum">      52 </span>            : * `S`: la pile de type `tps_stack` à considérer.
+<span class="lineNum">      53 </span>            : */
+<span class="lineNum">      54 </span>            : int tps_stack_top(tps_stack S);
+<span class="lineNum">      55 </span>            : /**
+<span class="lineNum">      56 </span>            : === Description
+<span class="lineNum">      57 </span>            : Ajoute un élément sur le sommet de la pile.
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span>            : === Paramètres
+<span class="lineNum">      60 </span>            : * `S`: la pile de type `tps_stack` à considérer.
+<span class="lineNum">      61 </span>            : */
+<span class="lineNum">      62 </span>            : void tps_stack_push(tps_stack S, int d);
+<span class="lineNum">      63 </span>            : /**
+<span class="lineNum">      64 </span>            : === Description
+<span class="lineNum">      65 </span>            : Enlève l'élément se trouvant sur le sommet de la pile et le retourne.
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            : === Paramètres
+<span class="lineNum">      68 </span>            : * `S`: la pile de type `tps_stack` à considérer.
+<span class="lineNum">      69 </span>            : */
+<span class="lineNum">      70 </span>            : int tps_stack_pop(tps_stack S);
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span>            : /**
+<span class="lineNum">      73 </span>            : === Description
+<span class="lineNum">      74 </span>            : Retourne la taille de la pile (le nombre d'élément s'y trouvant).
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : === Paramètres
+<span class="lineNum">      77 </span>            : * `S`: la pile de type `tps_stack` à considérer
+<span class="lineNum">      78 </span>            : */
+<span class="lineNum">      79 </span>            : int tps_stack_size(tps_stack S);
+<a name="80"><span class="lineNum">      80 </span>            : </a>
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span><span class="lineNoCov">          0 : void repondre(int q, char * res) {</span>
+<span class="lineNum">      83 </span><span class="lineNoCov">          0 :   printf(&quot;%i %s\n&quot;,q , res);</span>
+<span class="lineNum">      84 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

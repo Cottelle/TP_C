@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - Couverture - src/ui.c</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">src</a> - ui.c<span style="font-size: 80%;"> (source / <a href="ui.c.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">Couverture</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">84</td>
+            <td class="headerCovTableEntry">95</td>
+            <td class="headerCovTableEntryMed">88.4 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-14 13:43:54</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;ui.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &quot;game_io.h&quot;
+<span class="lineNum">       3 </span>            : #include &quot;position.h&quot;
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            : #include &lt;tps.h&gt;
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #define WINDOW_SIZE 600
+<a name="8"><span class="lineNum">       8 </span>            : </a>
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span><span class="lineCov">       2748 : int cell_size(game_state_t *game)</span>
+<span class="lineNum">      11 </span>            : {
+<span class="lineNum">      12 </span><span class="lineCov">       2748 :   return WINDOW_SIZE / game-&gt;map_size;</span>
+<a name="13"><span class="lineNum">      13 </span>            : }</a>
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span><span class="lineCov">       1373 : void update_direction(game_state_t *game)</span>
+<span class="lineNum">      16 </span>            : {
+<span class="lineNum">      17 </span><span class="lineCov">       1373 :   int keyPressed = tps_getKeyPressed();</span>
+<span class="lineNum">      18 </span><span class="lineCov">       1373 :   if(keyPressed)</span>
+<span class="lineNum">      19 </span>            :   {
+<span class="lineNum">      20 </span>            :     position_t new_direction;
+<span class="lineNum">      21 </span><span class="lineCov">        295 :     switch(keyPressed)</span>
+<span class="lineNum">      22 </span>            :     {
+<span class="lineNum">      23 </span>            :     case SDLK_UP:
+<span class="lineNum">      24 </span><span class="lineCov">         31 :       new_direction.x = 0;</span>
+<span class="lineNum">      25 </span><span class="lineCov">         31 :       new_direction.y = -1;</span>
+<span class="lineNum">      26 </span><span class="lineCov">         31 :       break;</span>
+<span class="lineNum">      27 </span>            :     case SDLK_DOWN:
+<span class="lineNum">      28 </span><span class="lineCov">         25 :       new_direction.x = 0;</span>
+<span class="lineNum">      29 </span><span class="lineCov">         25 :        new_direction.y = 1;</span>
+<span class="lineNum">      30 </span><span class="lineCov">         25 :       break;</span>
+<span class="lineNum">      31 </span>            :     case SDLK_LEFT:
+<span class="lineNum">      32 </span><span class="lineCov">         15 :        new_direction.x = -1;</span>
+<span class="lineNum">      33 </span><span class="lineCov">         15 :        new_direction.y = 0;</span>
+<span class="lineNum">      34 </span><span class="lineCov">         15 :       break;</span>
+<span class="lineNum">      35 </span>            :     case SDLK_RIGHT:
+<span class="lineNum">      36 </span><span class="lineCov">         41 :        new_direction.x = 1;</span>
+<span class="lineNum">      37 </span><span class="lineCov">         41 :        new_direction.y = 0;</span>
+<span class="lineNum">      38 </span><span class="lineCov">         41 :       break;</span>
+<span class="lineNum">      39 </span>            :     default:
+<span class="lineNum">      40 </span><span class="lineCov">        183 :       return;</span>
+<span class="lineNum">      41 </span>            :     }
+<span class="lineNum">      42 </span>            :     // on applique la nouvelle direction seulement
+<span class="lineNum">      43 </span>            :     // si ça ne nous fait pas faire un virage à 180°
+<span class="lineNum">      44 </span><span class="lineCov">        112 :     position_t new_pos = position_add(new_direction, game-&gt;queue[0]);</span>
+<span class="lineNum">      45 </span><span class="lineCov">        112 :     if(game-&gt;length == 1 || !position_equals(new_pos, game-&gt;queue[1]))</span>
+<span class="lineNum">      46 </span>            :     {
+<span class="lineNum">      47 </span><span class="lineCov">        112 :        game-&gt;direction = new_direction;</span>
+<span class="lineNum">      48 </span>            :     }
+<span class="lineNum">      49 </span>            :   }
+<span class="lineNum">      50 </span>            : }
+<a name="51"><span class="lineNum">      51 </span>            : </a>
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span><span class="lineCov">       1373 : void draw_snake(game_state_t *game)</span>
+<span class="lineNum">      54 </span>            : {
+<span class="lineNum">      55 </span><span class="lineCov">       2746 :   for(size_t i = 0; i &lt; game-&gt;length; i++)</span>
+<span class="lineNum">      56 </span>            :   {
+<span class="lineNum">      57 </span><span class="lineCov">       1373 :     int cell_s = cell_size(game);</span>
+<span class="lineNum">      58 </span><span class="lineCov">       2746 :     tps_fillRect(</span>
+<span class="lineNum">      59 </span><span class="lineCov">       1373 :       cell_s*game-&gt;queue[i].x,</span>
+<span class="lineNum">      60 </span><span class="lineCov">       1373 :       cell_s*game-&gt;queue[i].y,</span>
+<span class="lineNum">      61 </span>            :       cell_s, cell_s);
+<span class="lineNum">      62 </span>            :   }
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">       1373 : }</span></a>
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span><span class="lineCov">         14 : void test_game_over(game_state_t *game)</span>
+<span class="lineNum">      66 </span>            : {
+<span class="lineNum">      67 </span><span class="lineCov">         14 :   if(</span>
+<span class="lineNum">      68 </span><span class="lineCov">         14 :     game-&gt;queue[0].x &gt;= game-&gt;map_size</span>
+<span class="lineNum">      69 </span><span class="lineCov">         14 :   || game-&gt;queue[0].y &gt;= game-&gt;map_size</span>
+<span class="lineNum">      70 </span><span class="lineCov">         14 :   || game-&gt;queue[0].x &lt; 0</span>
+<span class="lineNum">      71 </span><span class="lineCov">         14 :   || game-&gt;queue[0].y &lt; 0)</span>
+<span class="lineNum">      72 </span>            :   {
+<span class="lineNum">      73 </span><span class="lineNoCov">          0 :     game-&gt;over = 1;</span>
+<span class="lineNum">      74 </span><span class="lineNoCov">          0 :     return;</span>
+<span class="lineNum">      75 </span>            :   }
+<span class="lineNum">      76 </span>            : 
+<span class="lineNum">      77 </span><span class="lineCov">         14 :   for(size_t i = 1; i &lt; game-&gt;length; i++)</span>
+<span class="lineNum">      78 </span>            :   {
+<span class="lineNum">      79 </span><span class="lineNoCov">          0 :     if(position_equals(game-&gt;queue[0], game-&gt;queue[i]))</span>
+<span class="lineNum">      80 </span>            :     {
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 :       game-&gt;over = 1;</span>
+<span class="lineNum">      82 </span><span class="lineNoCov">          0 :       return;</span>
+<span class="lineNum">      83 </span>            :     }
+<a name="84"><span class="lineNum">      84 </span>            :   }</a>
+<span class="lineNum">      85 </span>            : }
+<span class="lineNum">      86 </span><span class="lineCov">       1373 : int snake_should_update(game_state_t *game)</span>
+<span class="lineNum">      87 </span>            : {
+<span class="lineNum">      88 </span>            :   static unsigned int last_update;
+<span class="lineNum">      89 </span><span class="lineCov">       1373 :   last_update += tps_getDeltaTime();</span>
+<span class="lineNum">      90 </span><span class="lineCov">       1373 :   if(last_update &lt; game-&gt;frame_duration)</span>
+<span class="lineNum">      91 </span>            :   {
+<span class="lineNum">      92 </span><span class="lineCov">       1359 :     return 0;</span>
+<span class="lineNum">      93 </span>            :   }
+<span class="lineNum">      94 </span><span class="lineCov">         14 :   last_update -= game-&gt;frame_duration;</span>
+<a name="95"><span class="lineNum">      95 </span><span class="lineCov">         14 :   return 1;</span></a>
+<span class="lineNum">      96 </span>            : }
+<span class="lineNum">      97 </span><span class="lineCov">         14 : void update_snake(game_state_t *game)</span>
+<span class="lineNum">      98 </span>            : {
+<span class="lineNum">      99 </span><span class="lineCov">         28 :   for(size_t i = game-&gt;length; i &gt; 0; i--)</span>
+<span class="lineNum">     100 </span>            :   {
+<span class="lineNum">     101 </span><span class="lineCov">         14 :     game-&gt;queue[i] = game-&gt;queue[i-1];</span>
+<span class="lineNum">     102 </span>            :   }
+<span class="lineNum">     103 </span><span class="lineCov">         14 :   game-&gt;queue[0].x = game-&gt;queue[1].x + game-&gt;direction.x;</span>
+<span class="lineNum">     104 </span><span class="lineCov">         14 :   game-&gt;queue[0].y = game-&gt;queue[1].y + game-&gt;direction.y;</span>
+<a name="105"><span class="lineNum">     105 </span><span class="lineCov">         14 : }</span></a>
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span><span class="lineCov">         14 : void test_fruit(game_state_t *game)</span>
+<span class="lineNum">     108 </span>            : {
+<span class="lineNum">     109 </span><span class="lineCov">         14 :   if(position_equals(game-&gt;fruit, game-&gt;queue[0]))</span>
+<span class="lineNum">     110 </span>            :   {
+<span class="lineNum">     111 </span><span class="lineNoCov">          0 :     game-&gt;length++;</span>
+<span class="lineNum">     112 </span><span class="lineNoCov">          0 :     game-&gt;fruit.x = rand()%game-&gt;map_size;</span>
+<span class="lineNum">     113 </span><span class="lineNoCov">          0 :     game-&gt;fruit.y = rand()%game-&gt;map_size;</span>
+<span class="lineNum">     114 </span>            :   }
+<a name="115"><span class="lineNum">     115 </span><span class="lineCov">         14 : }</span></a>
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span><span class="lineCov">       1373 : void draw_fruit(game_state_t *game)</span>
+<span class="lineNum">     118 </span>            : {
+<span class="lineNum">     119 </span><span class="lineCov">       1373 :   tps_setColor(255,0,0);</span>
+<span class="lineNum">     120 </span><span class="lineCov">       1373 :   int cell_s = cell_size(game);</span>
+<span class="lineNum">     121 </span><span class="lineCov">       4119 :   tps_fillEllipse(</span>
+<span class="lineNum">     122 </span><span class="lineCov">       1373 :     game-&gt;fruit.x*cell_s + cell_s/2,</span>
+<span class="lineNum">     123 </span><span class="lineCov">       1373 :     game-&gt;fruit.y*cell_s + cell_s/2,</span>
+<span class="lineNum">     124 </span>            :     cell_s/2,
+<span class="lineNum">     125 </span>            :     cell_s/2);
+<a name="126"><span class="lineNum">     126 </span><span class="lineCov">       1373 : }</span></a>
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span><span class="lineCov">          1 : void game_loop(game_state_t *game)</span>
+<span class="lineNum">     129 </span>            : {
+<span class="lineNum">     130 </span>            : 
+<span class="lineNum">     131 </span><span class="lineCov">          2 :   tps_createWindow(</span>
+<span class="lineNum">     132 </span>            :     &quot;Snake&quot;,
+<span class="lineNum">     133 </span><span class="lineCov">          1 :     cell_size(game)*game-&gt;map_size,</span>
+<span class="lineNum">     134 </span><span class="lineCov">          1 :     cell_size(game)*game-&gt;map_size</span>
+<span class="lineNum">     135 </span>            :   );
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span><span class="lineCov">          1 :   while(tps_isRunning()) {</span>
+<span class="lineNum">     139 </span><span class="lineCov">        136 :     tps_background(255,255,255);</span>
+<span class="lineNum">     140 </span><span class="lineCov">        136 :     tps_getDeltaTime();</span>
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span><span class="lineCov">        136 :     tps_setColor(0,0,0);</span>
+<span class="lineNum">     143 </span><span class="lineCov">        136 :     tps_drawText(20, 20, &quot;Appuyer sur Entre pour commencer&quot;, 20);</span>
+<span class="lineNum">     144 </span><span class="lineCov">        136 :     tps_render();</span>
+<span class="lineNum">     145 </span><span class="lineCov">        136 :     if(tps_getKeyPressed() == SDLK_RETURN) break;</span>
+<span class="lineNum">     146 </span>            :   }
+<span class="lineNum">     147 </span><span class="lineCov">       1375 :   while(tps_isRunning()) {</span>
+<span class="lineNum">     148 </span><span class="lineCov">       1373 :     tps_background(255,255,255);</span>
+<span class="lineNum">     149 </span><span class="lineCov">       1373 :     tps_setColor(0,0,0);</span>
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span><span class="lineCov">       1373 :     if(game-&gt;over)</span>
+<span class="lineNum">     152 </span>            :     {
+<span class="lineNum">     153 </span><span class="lineNoCov">          0 :       tps_drawText(20, 20, &quot;Game Over&quot;, 20);</span>
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 :       tps_render();</span>
+<span class="lineNum">     155 </span><span class="lineNoCov">          0 :       continue;</span>
+<span class="lineNum">     156 </span>            :     }
+<span class="lineNum">     157 </span>            : 
+<span class="lineNum">     158 </span><span class="lineCov">       1373 :     if(snake_should_update(game))</span>
+<span class="lineNum">     159 </span>            :     {
+<span class="lineNum">     160 </span><span class="lineCov">         14 :       update_snake(game);</span>
+<span class="lineNum">     161 </span><span class="lineCov">         14 :       test_game_over(game);</span>
+<span class="lineNum">     162 </span><span class="lineCov">         14 :       test_fruit(game);</span>
+<span class="lineNum">     163 </span>            :     }
+<span class="lineNum">     164 </span><span class="lineCov">       1373 :     update_direction(game);</span>
+<span class="lineNum">     165 </span><span class="lineCov">       1373 :     draw_snake(game);</span>
+<span class="lineNum">     166 </span><span class="lineCov">       1373 :     draw_fruit(game);</span>
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span><span class="lineCov">       1373 :     tps_render();</span>
+<span class="lineNum">     169 </span>            :   }
+<span class="lineNum">     170 </span><span class="lineCov">          1 :   tps_closeWindow();</span>
+<span class="lineNum">     171 </span><span class="lineCov">          1 :   save_game(&quot;saves/last_game.txt&quot;, game);</span>
+<span class="lineNum">     172 </span><span class="lineCov">          1 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

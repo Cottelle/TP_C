@@ -1,0 +1,654 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - Couverture - /usr/local/include/noise.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">usr/local/include</a> - noise.h<span style="font-size: 80%;"> (source / <a href="noise.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">Couverture</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">297</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-14 13:43:54</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Noise1234</a>
+<span class="lineNum">       2 </span>            : // Author: Stefan Gustavson (stegu@itn.liu.se)
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : // This library is public domain software, released by the author
+<span class="lineNum">       5 </span>            : // into the public domain in February 2011. You may do anything
+<span class="lineNum">       6 </span>            : // you like with it. You may even remove all attributions,
+<span class="lineNum">       7 </span>            : // but of course I'd appreciate it if you kept my name somewhere.
+<span class="lineNum">       8 </span>            : //
+<span class="lineNum">       9 </span>            : // This library is distributed in the hope that it will be useful,
+<span class="lineNum">      10 </span>            : // but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      11 </span>            : // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+<span class="lineNum">      12 </span>            : // General Public License for more details.
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : /** \file
+<span class="lineNum">      15 </span>            :                 \brief Implements the Noise1234 class for producing Perlin noise.
+<span class="lineNum">      16 </span>            :                 \author Stefan Gustavson (stegu@itn.liu.se)
+<span class="lineNum">      17 </span>            : */
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span>            : /*
+<span class="lineNum">      20 </span>            :  * This implementation is &quot;Improved Noise&quot; as presented by
+<span class="lineNum">      21 </span>            :  * Ken Perlin at Siggraph 2002. The 3D function is a direct port
+<span class="lineNum">      22 </span>            :  * of his Java reference code available on www.noisemachine.com
+<span class="lineNum">      23 </span>            :  * (although I cleaned it up and made the code more readable),
+<span class="lineNum">      24 </span>            :  * but the 1D, 2D and 4D cases were implemented from scratch
+<span class="lineNum">      25 </span>            :  * by me.
+<span class="lineNum">      26 </span>            :  *
+<span class="lineNum">      27 </span>            :  * This is a highly reusable class. It has no dependencies
+<span class="lineNum">      28 </span>            :  * on any other file, apart from its own header file.
+<span class="lineNum">      29 </span>            :  */
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span>            : #ifndef NOISE2_H_INCLUDE
+<span class="lineNum">      32 </span>            : #define NOISE2_H_INCLUDE
+<span class="lineNum">      33 </span>            : 
+<span class="lineNum">      34 </span>            : // This is the new and improved, C(2) continuous interpolant
+<span class="lineNum">      35 </span>            : #define FADE(t) ( t * t * t * ( t * ( t * 6 - 15 ) + 10 ) )
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : #define FASTFLOOR(x) ( ((x)&gt;0) ? ((int)x) : ((int)x-1 ) )
+<span class="lineNum">      38 </span>            : #define LERP(t, a, b) ((a) + (t)*((b)-(a)))
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            : 
+<span class="lineNum">      41 </span>            : //---------------------------------------------------------------------
+<span class="lineNum">      42 </span>            : // Static data
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : /*
+<span class="lineNum">      45 </span>            :  * Permutation table. This is just a random jumble of all numbers 0-255,
+<span class="lineNum">      46 </span>            :  * repeated twice to avoid wrapping the index at 255 for each lookup.
+<span class="lineNum">      47 </span>            :  * This needs to be exactly the same for all instances on all platforms,
+<span class="lineNum">      48 </span>            :  * so it's easiest to just keep it as static explicit data.
+<span class="lineNum">      49 </span>            :  * This also removes the need for any initialisation of this class.
+<span class="lineNum">      50 </span>            :  *
+<span class="lineNum">      51 </span>            :  * Note that making this an int[] instead of a char[] might make the
+<span class="lineNum">      52 </span>            :  * code run faster on platforms with a high penalty for unaligned single
+<span class="lineNum">      53 </span>            :  * byte addressing. Intel x86 is generally single-byte-friendly, but
+<span class="lineNum">      54 </span>            :  * some other CPUs are faster with 4-aligned reads.
+<span class="lineNum">      55 </span>            :  * However, a char[] is smaller, which avoids cache trashing, and that
+<span class="lineNum">      56 </span>            :  * is probably the most important aspect on most architectures.
+<span class="lineNum">      57 </span>            :  * This array is accessed a *lot* by the noise functions.
+<span class="lineNum">      58 </span>            :  * A vector-valued noise over 3D accesses it 96 times, and a
+<span class="lineNum">      59 </span>            :  * float-valued 4D noise 64 times. We want this to fit in the cache!
+<span class="lineNum">      60 </span>            :  */
+<span class="lineNum">      61 </span>            : unsigned char perm[] = {151,160,137,91,90,15,
+<span class="lineNum">      62 </span>            :   131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
+<span class="lineNum">      63 </span>            :   190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
+<span class="lineNum">      64 </span>            :   88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
+<span class="lineNum">      65 </span>            :   77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
+<span class="lineNum">      66 </span>            :   102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
+<span class="lineNum">      67 </span>            :   135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
+<span class="lineNum">      68 </span>            :   5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
+<span class="lineNum">      69 </span>            :   223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
+<span class="lineNum">      70 </span>            :   129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
+<span class="lineNum">      71 </span>            :   251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
+<span class="lineNum">      72 </span>            :   49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+<span class="lineNum">      73 </span>            :   138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,
+<span class="lineNum">      74 </span>            :   151,160,137,91,90,15,
+<span class="lineNum">      75 </span>            :   131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
+<span class="lineNum">      76 </span>            :   190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
+<span class="lineNum">      77 </span>            :   88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
+<span class="lineNum">      78 </span>            :   77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
+<span class="lineNum">      79 </span>            :   102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
+<span class="lineNum">      80 </span>            :   135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
+<span class="lineNum">      81 </span>            :   5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
+<span class="lineNum">      82 </span>            :   223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
+<span class="lineNum">      83 </span>            :   129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
+<span class="lineNum">      84 </span>            :   251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
+<span class="lineNum">      85 </span>            :   49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+<span class="lineNum">      86 </span>            :   138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
+<span class="lineNum">      87 </span>            : };
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            : //---------------------------------------------------------------------
+<span class="lineNum">      90 </span>            : 
+<span class="lineNum">      91 </span>            : /*
+<span class="lineNum">      92 </span>            :  * Helper functions to compute gradients-dot-residualvectors (1D to 4D)
+<span class="lineNum">      93 </span>            :  * Note that these generate gradients of more than unit length. To make
+<span class="lineNum">      94 </span>            :  * a close match with the value range of classic Perlin noise, the final
+<span class="lineNum">      95 </span>            :  * noise values need to be rescaled. To match the RenderMan noise in a
+<span class="lineNum">      96 </span>            :  * statistical sense, the approximate scaling values (empirically
+<span class="lineNum">      97 </span>            :  * determined from test renderings) are:
+<span class="lineNum">      98 </span>            :  * 1D noise needs rescaling with 0.188
+<span class="lineNum">      99 </span>            :  * 2D noise needs rescaling with 0.507
+<span class="lineNum">     100 </span>            :  * 3D noise needs rescaling with 0.936
+<span class="lineNum">     101 </span>            :  * 4D noise needs rescaling with 0.87
+<span class="lineNum">     102 </span>            :  * Note that these noise functions are the most practical and useful
+<span class="lineNum">     103 </span>            :  * signed version of Perlin noise. To return values according to the
+<span class="lineNum">     104 </span>            :  * RenderMan specification from the SL noise() and pnoise() functions,
+<span class="lineNum">     105 </span>            :  * the noise values need to be scaled and offset to [0,1], like this:
+<span class="lineNum">     106 </span>            :  * float SLnoise = (noise(x,y,z) + 1.0) * 0.5;
+<a name="107"><span class="lineNum">     107 </span>            :  */</a>
+<span class="lineNum">     108 </span>            : 
+<span class="lineNum">     109 </span><span class="lineNoCov">          0 : float  grad1D( int hash, float x ) {</span>
+<span class="lineNum">     110 </span><span class="lineNoCov">          0 :     int h = hash &amp; 15;</span>
+<span class="lineNum">     111 </span><span class="lineNoCov">          0 :     float grad = 1.0 + (h &amp; 7);  // Gradient value 1.0, 2.0, ..., 8.0</span>
+<span class="lineNum">     112 </span><span class="lineNoCov">          0 :     if (h&amp;8) grad = -grad;         // and a random sign for the gradient</span>
+<span class="lineNum">     113 </span><span class="lineNoCov">          0 :     return ( grad * x );           // Multiply the gradient with the distance</span>
+<a name="114"><span class="lineNum">     114 </span>            : }</a>
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span><span class="lineNoCov">          0 : float  grad2D( int hash, float x, float y ) {</span>
+<span class="lineNum">     117 </span><span class="lineNoCov">          0 :     int h = hash &amp; 7;      // Convert low 3 bits of hash code</span>
+<span class="lineNum">     118 </span><span class="lineNoCov">          0 :     float u = h&lt;4 ? x : y;  // into 8 simple gradient directions,</span>
+<span class="lineNum">     119 </span><span class="lineNoCov">          0 :     float v = h&lt;4 ? y : x;  // and compute the dot product with (x,y).</span>
+<span class="lineNum">     120 </span><span class="lineNoCov">          0 :     return ((h&amp;1)? -u : u) + ((h&amp;2)? -2.0*v : 2.0*v);</span>
+<a name="121"><span class="lineNum">     121 </span>            : }</a>
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span><span class="lineNoCov">          0 : float  grad3D( int hash, float x, float y , float z ) {</span>
+<span class="lineNum">     124 </span><span class="lineNoCov">          0 :     int h = hash &amp; 15;     // Convert low 4 bits of hash code into 12 simple</span>
+<span class="lineNum">     125 </span><span class="lineNoCov">          0 :     float u = h&lt;8 ? x : y; // gradient directions, and compute dot product.</span>
+<span class="lineNum">     126 </span><span class="lineNoCov">          0 :     float v = h&lt;4 ? y : h==12||h==14 ? x : z; // Fix repeats at h = 12 to 15</span>
+<span class="lineNum">     127 </span><span class="lineNoCov">          0 :     return ((h&amp;1)? -u : u) + ((h&amp;2)? -v : v);</span>
+<a name="128"><span class="lineNum">     128 </span>            : }</a>
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span><span class="lineNoCov">          0 : float  grad4D( int hash, float x, float y, float z, float t ) {</span>
+<span class="lineNum">     131 </span><span class="lineNoCov">          0 :     int h = hash &amp; 31;      // Convert low 5 bits of hash code into 32 simple</span>
+<span class="lineNum">     132 </span><span class="lineNoCov">          0 :     float u = h&lt;24 ? x : y; // gradient directions, and compute dot product.</span>
+<span class="lineNum">     133 </span><span class="lineNoCov">          0 :     float v = h&lt;16 ? y : z;</span>
+<span class="lineNum">     134 </span><span class="lineNoCov">          0 :     float w = h&lt;8 ? z : t;</span>
+<span class="lineNum">     135 </span><span class="lineNoCov">          0 :     return ((h&amp;1)? -u : u) + ((h&amp;2)? -v : v) + ((h&amp;4)? -w : w);</span>
+<span class="lineNum">     136 </span>            : }
+<span class="lineNum">     137 </span>            : 
+<span class="lineNum">     138 </span>            : //---------------------------------------------------------------------
+<a name="139"><span class="lineNum">     139 </span>            : /** 1D float Perlin noise, SL &quot;noise()&quot;</a>
+<span class="lineNum">     140 </span>            :  */
+<span class="lineNum">     141 </span><span class="lineNoCov">          0 : float noise1D( float x )</span>
+<span class="lineNum">     142 </span>            : {
+<span class="lineNum">     143 </span>            :     int ix0, ix1;
+<span class="lineNum">     144 </span>            :     float fx0, fx1;
+<span class="lineNum">     145 </span>            :     float s, n0, n1;
+<span class="lineNum">     146 </span>            : 
+<span class="lineNum">     147 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     148 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;       // Fractional part of x</span>
+<span class="lineNum">     149 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     150 </span><span class="lineNoCov">          0 :     ix1 = ( ix0+1 ) &amp; 0xff;</span>
+<span class="lineNum">     151 </span><span class="lineNoCov">          0 :     ix0 = ix0 &amp; 0xff;    // Wrap to 0..255</span>
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span><span class="lineNoCov">          0 :     n0 = grad1D( perm[ ix0 ], fx0 );</span>
+<span class="lineNum">     156 </span><span class="lineNoCov">          0 :     n1 = grad1D( perm[ ix1 ], fx1 );</span>
+<span class="lineNum">     157 </span><span class="lineNoCov">          0 :     return 0.188f * ( LERP( s, n0, n1 ) );</span>
+<span class="lineNum">     158 </span>            : }
+<span class="lineNum">     159 </span>            : 
+<span class="lineNum">     160 </span>            : //---------------------------------------------------------------------
+<a name="161"><span class="lineNum">     161 </span>            : /** 1D float Perlin periodic noise, SL &quot;pnoise()&quot;</a>
+<span class="lineNum">     162 </span>            :  */
+<span class="lineNum">     163 </span><span class="lineNoCov">          0 : float pnoise1D( float x, int px )</span>
+<span class="lineNum">     164 </span>            : {
+<span class="lineNum">     165 </span>            :     int ix0, ix1;
+<span class="lineNum">     166 </span>            :     float fx0, fx1;
+<span class="lineNum">     167 </span>            :     float s, n0, n1;
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     170 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;       // Fractional part of x</span>
+<span class="lineNum">     171 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     172 </span><span class="lineNoCov">          0 :     ix1 = (( ix0 + 1 ) % px) &amp; 0xff; // Wrap to 0..px-1 *and* wrap to 0..255</span>
+<span class="lineNum">     173 </span><span class="lineNoCov">          0 :     ix0 = ( ix0 % px ) &amp; 0xff;      // (because px might be greater than 256)</span>
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     176 </span>            : 
+<span class="lineNum">     177 </span><span class="lineNoCov">          0 :     n0 = grad1D( perm[ ix0 ], fx0 );</span>
+<span class="lineNum">     178 </span><span class="lineNoCov">          0 :     n1 = grad1D( perm[ ix1 ], fx1 );</span>
+<span class="lineNum">     179 </span><span class="lineNoCov">          0 :     return 0.188f * ( LERP( s, n0, n1 ) );</span>
+<span class="lineNum">     180 </span>            : }
+<span class="lineNum">     181 </span>            : 
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            : //---------------------------------------------------------------------
+<a name="184"><span class="lineNum">     184 </span>            : /** 2D float Perlin noise.</a>
+<span class="lineNum">     185 </span>            :  */
+<span class="lineNum">     186 </span><span class="lineNoCov">          0 : float noise2D( float x, float y )</span>
+<span class="lineNum">     187 </span>            : {
+<span class="lineNum">     188 </span>            :     int ix0, iy0, ix1, iy1;
+<span class="lineNum">     189 </span>            :     float fx0, fy0, fx1, fy1;
+<span class="lineNum">     190 </span>            :     float s, t, nx0, nx1, n0, n1;
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     193 </span><span class="lineNoCov">          0 :     iy0 = FASTFLOOR( y ); // Integer part of y</span>
+<span class="lineNum">     194 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;        // Fractional part of x</span>
+<span class="lineNum">     195 </span><span class="lineNoCov">          0 :     fy0 = y - iy0;        // Fractional part of y</span>
+<span class="lineNum">     196 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     197 </span><span class="lineNoCov">          0 :     fy1 = fy0 - 1.0f;</span>
+<span class="lineNum">     198 </span><span class="lineNoCov">          0 :     ix1 = (ix0 + 1) &amp; 0xff;  // Wrap to 0..255</span>
+<span class="lineNum">     199 </span><span class="lineNoCov">          0 :     iy1 = (iy0 + 1) &amp; 0xff;</span>
+<span class="lineNum">     200 </span><span class="lineNoCov">          0 :     ix0 = ix0 &amp; 0xff;</span>
+<span class="lineNum">     201 </span><span class="lineNoCov">          0 :     iy0 = iy0 &amp; 0xff;</span>
+<span class="lineNum">     202 </span>            : 
+<span class="lineNum">     203 </span><span class="lineNoCov">          0 :     t = FADE( fy0 );</span>
+<span class="lineNum">     204 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span><span class="lineNoCov">          0 :     nx0 = grad2D(perm[ix0 + perm[iy0]], fx0, fy0);</span>
+<span class="lineNum">     207 </span><span class="lineNoCov">          0 :     nx1 = grad2D(perm[ix0 + perm[iy1]], fx0, fy1);</span>
+<span class="lineNum">     208 </span><span class="lineNoCov">          0 :     n0 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span><span class="lineNoCov">          0 :     nx0 = grad2D(perm[ix1 + perm[iy0]], fx1, fy0);</span>
+<span class="lineNum">     211 </span><span class="lineNoCov">          0 :     nx1 = grad2D(perm[ix1 + perm[iy1]], fx1, fy1);</span>
+<span class="lineNum">     212 </span><span class="lineNoCov">          0 :     n1 = LERP(t, nx0, nx1);</span>
+<span class="lineNum">     213 </span>            : 
+<span class="lineNum">     214 </span><span class="lineNoCov">          0 :     return 0.507f * ( LERP( s, n0, n1 ) );</span>
+<span class="lineNum">     215 </span>            : }
+<span class="lineNum">     216 </span>            : 
+<span class="lineNum">     217 </span>            : //---------------------------------------------------------------------
+<a name="218"><span class="lineNum">     218 </span>            : /** 2D float Perlin periodic noise.</a>
+<span class="lineNum">     219 </span>            :  */
+<span class="lineNum">     220 </span><span class="lineNoCov">          0 : float pnoise2D( float x, float y, int px, int py )</span>
+<span class="lineNum">     221 </span>            : {
+<span class="lineNum">     222 </span>            :     int ix0, iy0, ix1, iy1;
+<span class="lineNum">     223 </span>            :     float fx0, fy0, fx1, fy1;
+<span class="lineNum">     224 </span>            :     float s, t, nx0, nx1, n0, n1;
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     227 </span><span class="lineNoCov">          0 :     iy0 = FASTFLOOR( y ); // Integer part of y</span>
+<span class="lineNum">     228 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;        // Fractional part of x</span>
+<span class="lineNum">     229 </span><span class="lineNoCov">          0 :     fy0 = y - iy0;        // Fractional part of y</span>
+<span class="lineNum">     230 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     231 </span><span class="lineNoCov">          0 :     fy1 = fy0 - 1.0f;</span>
+<span class="lineNum">     232 </span><span class="lineNoCov">          0 :     ix1 = (( ix0 + 1 ) % px) &amp; 0xff;  // Wrap to 0..px-1 and wrap to 0..255</span>
+<span class="lineNum">     233 </span><span class="lineNoCov">          0 :     iy1 = (( iy0 + 1 ) % py) &amp; 0xff;  // Wrap to 0..py-1 and wrap to 0..255</span>
+<span class="lineNum">     234 </span><span class="lineNoCov">          0 :     ix0 = ( ix0 % px ) &amp; 0xff;</span>
+<span class="lineNum">     235 </span><span class="lineNoCov">          0 :     iy0 = ( iy0 % py ) &amp; 0xff;</span>
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span><span class="lineNoCov">          0 :     t = FADE( fy0 );</span>
+<span class="lineNum">     238 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span><span class="lineNoCov">          0 :     nx0 = grad2D(perm[ix0 + perm[iy0]], fx0, fy0);</span>
+<span class="lineNum">     241 </span><span class="lineNoCov">          0 :     nx1 = grad2D(perm[ix0 + perm[iy1]], fx0, fy1);</span>
+<span class="lineNum">     242 </span><span class="lineNoCov">          0 :     n0 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     243 </span>            : 
+<span class="lineNum">     244 </span><span class="lineNoCov">          0 :     nx0 = grad2D(perm[ix1 + perm[iy0]], fx1, fy0);</span>
+<span class="lineNum">     245 </span><span class="lineNoCov">          0 :     nx1 = grad2D(perm[ix1 + perm[iy1]], fx1, fy1);</span>
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 :     n1 = LERP(t, nx0, nx1);</span>
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span><span class="lineNoCov">          0 :     return 0.507f * ( LERP( s, n0, n1 ) );</span>
+<span class="lineNum">     249 </span>            : }
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            : //---------------------------------------------------------------------
+<a name="253"><span class="lineNum">     253 </span>            : /** 3D float Perlin noise.</a>
+<span class="lineNum">     254 </span>            :  */
+<span class="lineNum">     255 </span><span class="lineNoCov">          0 : float noise3D( float x, float y, float z )</span>
+<span class="lineNum">     256 </span>            : {
+<span class="lineNum">     257 </span>            :     int ix0, iy0, ix1, iy1, iz0, iz1;
+<span class="lineNum">     258 </span>            :     float fx0, fy0, fz0, fx1, fy1, fz1;
+<span class="lineNum">     259 </span>            :     float s, t, r;
+<span class="lineNum">     260 </span>            :     float nxy0, nxy1, nx0, nx1, n0, n1;
+<span class="lineNum">     261 </span>            : 
+<span class="lineNum">     262 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     263 </span><span class="lineNoCov">          0 :     iy0 = FASTFLOOR( y ); // Integer part of y</span>
+<span class="lineNum">     264 </span><span class="lineNoCov">          0 :     iz0 = FASTFLOOR( z ); // Integer part of z</span>
+<span class="lineNum">     265 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;        // Fractional part of x</span>
+<span class="lineNum">     266 </span><span class="lineNoCov">          0 :     fy0 = y - iy0;        // Fractional part of y</span>
+<span class="lineNum">     267 </span><span class="lineNoCov">          0 :     fz0 = z - iz0;        // Fractional part of z</span>
+<span class="lineNum">     268 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     269 </span><span class="lineNoCov">          0 :     fy1 = fy0 - 1.0f;</span>
+<span class="lineNum">     270 </span><span class="lineNoCov">          0 :     fz1 = fz0 - 1.0f;</span>
+<span class="lineNum">     271 </span><span class="lineNoCov">          0 :     ix1 = ( ix0 + 1 ) &amp; 0xff; // Wrap to 0..255</span>
+<span class="lineNum">     272 </span><span class="lineNoCov">          0 :     iy1 = ( iy0 + 1 ) &amp; 0xff;</span>
+<span class="lineNum">     273 </span><span class="lineNoCov">          0 :     iz1 = ( iz0 + 1 ) &amp; 0xff;</span>
+<span class="lineNum">     274 </span><span class="lineNoCov">          0 :     ix0 = ix0 &amp; 0xff;</span>
+<span class="lineNum">     275 </span><span class="lineNoCov">          0 :     iy0 = iy0 &amp; 0xff;</span>
+<span class="lineNum">     276 </span><span class="lineNoCov">          0 :     iz0 = iz0 &amp; 0xff;</span>
+<span class="lineNum">     277 </span>            : 
+<span class="lineNum">     278 </span><span class="lineNoCov">          0 :     r = FADE( fz0 );</span>
+<span class="lineNum">     279 </span><span class="lineNoCov">          0 :     t = FADE( fy0 );</span>
+<span class="lineNum">     280 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix0 + perm[iy0 + perm[iz0]]], fx0, fy0, fz0);</span>
+<span class="lineNum">     283 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix0 + perm[iy0 + perm[iz1]]], fx0, fy0, fz1);</span>
+<span class="lineNum">     284 </span><span class="lineNoCov">          0 :     nx0 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     285 </span>            : 
+<span class="lineNum">     286 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix0 + perm[iy1 + perm[iz0]]], fx0, fy1, fz0);</span>
+<span class="lineNum">     287 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix0 + perm[iy1 + perm[iz1]]], fx0, fy1, fz1);</span>
+<span class="lineNum">     288 </span><span class="lineNoCov">          0 :     nx1 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     289 </span>            : 
+<span class="lineNum">     290 </span><span class="lineNoCov">          0 :     n0 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     291 </span>            : 
+<span class="lineNum">     292 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix1 + perm[iy0 + perm[iz0]]], fx1, fy0, fz0);</span>
+<span class="lineNum">     293 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix1 + perm[iy0 + perm[iz1]]], fx1, fy0, fz1);</span>
+<span class="lineNum">     294 </span><span class="lineNoCov">          0 :     nx0 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     295 </span>            : 
+<span class="lineNum">     296 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix1 + perm[iy1 + perm[iz0]]], fx1, fy1, fz0);</span>
+<span class="lineNum">     297 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix1 + perm[iy1 + perm[iz1]]], fx1, fy1, fz1);</span>
+<span class="lineNum">     298 </span><span class="lineNoCov">          0 :     nx1 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     299 </span>            : 
+<span class="lineNum">     300 </span><span class="lineNoCov">          0 :     n1 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     301 </span>            : 
+<span class="lineNum">     302 </span><span class="lineNoCov">          0 :     return 0.936f * ( LERP( s, n0, n1 ) );</span>
+<span class="lineNum">     303 </span>            : }
+<span class="lineNum">     304 </span>            : float perlin_amp_falloff = 0.5;
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            : //---------------------------------------------------------------------
+<a name="307"><span class="lineNum">     307 </span>            : /** 3D float Perlin periodic noise.</a>
+<span class="lineNum">     308 </span>            :  */
+<span class="lineNum">     309 </span><span class="lineNoCov">          0 : float pnoise3D( float x, float y, float z, int px, int py, int pz )</span>
+<span class="lineNum">     310 </span>            : {
+<span class="lineNum">     311 </span>            :     int ix0, iy0, ix1, iy1, iz0, iz1;
+<span class="lineNum">     312 </span>            :     float fx0, fy0, fz0, fx1, fy1, fz1;
+<span class="lineNum">     313 </span>            :     float s, t, r;
+<span class="lineNum">     314 </span>            :     float nxy0, nxy1, nx0, nx1, n0, n1;
+<span class="lineNum">     315 </span>            : 
+<span class="lineNum">     316 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     317 </span><span class="lineNoCov">          0 :     iy0 = FASTFLOOR( y ); // Integer part of y</span>
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 :     iz0 = FASTFLOOR( z ); // Integer part of z</span>
+<span class="lineNum">     319 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;        // Fractional part of x</span>
+<span class="lineNum">     320 </span><span class="lineNoCov">          0 :     fy0 = y - iy0;        // Fractional part of y</span>
+<span class="lineNum">     321 </span><span class="lineNoCov">          0 :     fz0 = z - iz0;        // Fractional part of z</span>
+<span class="lineNum">     322 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     323 </span><span class="lineNoCov">          0 :     fy1 = fy0 - 1.0f;</span>
+<span class="lineNum">     324 </span><span class="lineNoCov">          0 :     fz1 = fz0 - 1.0f;</span>
+<span class="lineNum">     325 </span><span class="lineNoCov">          0 :     ix1 = (( ix0 + 1 ) % px ) &amp; 0xff; // Wrap to 0..px-1 and wrap to 0..255</span>
+<span class="lineNum">     326 </span><span class="lineNoCov">          0 :     iy1 = (( iy0 + 1 ) % py ) &amp; 0xff; // Wrap to 0..py-1 and wrap to 0..255</span>
+<span class="lineNum">     327 </span><span class="lineNoCov">          0 :     iz1 = (( iz0 + 1 ) % pz ) &amp; 0xff; // Wrap to 0..pz-1 and wrap to 0..255</span>
+<span class="lineNum">     328 </span><span class="lineNoCov">          0 :     ix0 = ( ix0 % px ) &amp; 0xff;</span>
+<span class="lineNum">     329 </span><span class="lineNoCov">          0 :     iy0 = ( iy0 % py ) &amp; 0xff;</span>
+<span class="lineNum">     330 </span><span class="lineNoCov">          0 :     iz0 = ( iz0 % pz ) &amp; 0xff;</span>
+<span class="lineNum">     331 </span>            : 
+<span class="lineNum">     332 </span><span class="lineNoCov">          0 :     r = FADE( fz0 );</span>
+<span class="lineNum">     333 </span><span class="lineNoCov">          0 :     t = FADE( fy0 );</span>
+<span class="lineNum">     334 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix0 + perm[iy0 + perm[iz0]]], fx0, fy0, fz0);</span>
+<span class="lineNum">     337 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix0 + perm[iy0 + perm[iz1]]], fx0, fy0, fz1);</span>
+<span class="lineNum">     338 </span><span class="lineNoCov">          0 :     nx0 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     339 </span>            : 
+<span class="lineNum">     340 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix0 + perm[iy1 + perm[iz0]]], fx0, fy1, fz0);</span>
+<span class="lineNum">     341 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix0 + perm[iy1 + perm[iz1]]], fx0, fy1, fz1);</span>
+<span class="lineNum">     342 </span><span class="lineNoCov">          0 :     nx1 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span><span class="lineNoCov">          0 :     n0 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     345 </span>            : 
+<span class="lineNum">     346 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix1 + perm[iy0 + perm[iz0]]], fx1, fy0, fz0);</span>
+<span class="lineNum">     347 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix1 + perm[iy0 + perm[iz1]]], fx1, fy0, fz1);</span>
+<span class="lineNum">     348 </span><span class="lineNoCov">          0 :     nx0 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span><span class="lineNoCov">          0 :     nxy0 = grad3D(perm[ix1 + perm[iy1 + perm[iz0]]], fx1, fy1, fz0);</span>
+<span class="lineNum">     351 </span><span class="lineNoCov">          0 :     nxy1 = grad3D(perm[ix1 + perm[iy1 + perm[iz1]]], fx1, fy1, fz1);</span>
+<span class="lineNum">     352 </span><span class="lineNoCov">          0 :     nx1 = LERP( r, nxy0, nxy1 );</span>
+<span class="lineNum">     353 </span>            : 
+<span class="lineNum">     354 </span><span class="lineNoCov">          0 :     n1 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     355 </span>            : 
+<span class="lineNum">     356 </span><span class="lineNoCov">          0 :     return 0.936f * ( LERP( s, n0, n1 ) );</span>
+<a name="357"><span class="lineNum">     357 </span>            : }</a>
+<span class="lineNum">     358 </span>            : 
+<span class="lineNum">     359 </span><span class="lineNoCov">          0 : float perlin3D(float x, float y, float z, float freq, int depth)</span>
+<span class="lineNum">     360 </span>            : {
+<span class="lineNum">     361 </span><span class="lineNoCov">          0 :     float xa = x*freq;</span>
+<span class="lineNum">     362 </span><span class="lineNoCov">          0 :     float ya = y*freq;</span>
+<span class="lineNum">     363 </span><span class="lineNoCov">          0 :     float za = z*freq;</span>
+<span class="lineNum">     364 </span><span class="lineNoCov">          0 :     float ret = 0;</span>
+<span class="lineNum">     365 </span><span class="lineNoCov">          0 :     float ampl=1;</span>
+<span class="lineNum">     366 </span><span class="lineNoCov">          0 :     float div = 0.0;</span>
+<span class="lineNum">     367 </span>            :     int i;
+<span class="lineNum">     368 </span><span class="lineNoCov">          0 :     for(i=0; i&lt;depth; i++)</span>
+<span class="lineNum">     369 </span>            :     {
+<span class="lineNum">     370 </span><span class="lineNoCov">          0 :         div += ampl;</span>
+<span class="lineNum">     371 </span><span class="lineNoCov">          0 :         ret += noise3D(xa, ya, za) * ampl;</span>
+<span class="lineNum">     372 </span><span class="lineNoCov">          0 :         ampl *= perlin_amp_falloff;</span>
+<span class="lineNum">     373 </span><span class="lineNoCov">          0 :         xa *= 2;</span>
+<span class="lineNum">     374 </span><span class="lineNoCov">          0 :         ya *= 2;</span>
+<span class="lineNum">     375 </span><span class="lineNoCov">          0 :         za *= 2;</span>
+<span class="lineNum">     376 </span>            :     }
+<span class="lineNum">     377 </span>            : 
+<span class="lineNum">     378 </span><span class="lineNoCov">          0 :     return ret/div;</span>
+<a name="379"><span class="lineNum">     379 </span>            : }</a>
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span><span class="lineNoCov">          0 : float perlinPeriodic3D(float x, float y, float z, float px, float py, float pz, float freq, int depth)</span>
+<span class="lineNum">     382 </span>            : {
+<span class="lineNum">     383 </span><span class="lineNoCov">          0 :     float xa = x*freq;</span>
+<span class="lineNum">     384 </span><span class="lineNoCov">          0 :     float ya = y*freq;</span>
+<span class="lineNum">     385 </span><span class="lineNoCov">          0 :     float za = z*freq;</span>
+<span class="lineNum">     386 </span><span class="lineNoCov">          0 :     float pxa = px*freq;</span>
+<span class="lineNum">     387 </span><span class="lineNoCov">          0 :     float pya = py*freq;</span>
+<span class="lineNum">     388 </span><span class="lineNoCov">          0 :     float pza = pz*freq;</span>
+<span class="lineNum">     389 </span><span class="lineNoCov">          0 :     float ret = 0;</span>
+<span class="lineNum">     390 </span><span class="lineNoCov">          0 :     float ampl=1;</span>
+<span class="lineNum">     391 </span><span class="lineNoCov">          0 :     float div = 0.0;</span>
+<span class="lineNum">     392 </span>            :     int i;
+<span class="lineNum">     393 </span><span class="lineNoCov">          0 :     for(i=0; i&lt;depth; i++)</span>
+<span class="lineNum">     394 </span>            :     {
+<span class="lineNum">     395 </span><span class="lineNoCov">          0 :         div += ampl;</span>
+<span class="lineNum">     396 </span><span class="lineNoCov">          0 :         ret += pnoise3D(xa, ya, za, pxa, pya, pza) * ampl;</span>
+<span class="lineNum">     397 </span><span class="lineNoCov">          0 :         ampl *= perlin_amp_falloff;</span>
+<span class="lineNum">     398 </span><span class="lineNoCov">          0 :         xa *= 2;</span>
+<span class="lineNum">     399 </span><span class="lineNoCov">          0 :         ya *= 2;</span>
+<span class="lineNum">     400 </span><span class="lineNoCov">          0 :         za *= 2;</span>
+<span class="lineNum">     401 </span><span class="lineNoCov">          0 :         pxa *= 2;</span>
+<span class="lineNum">     402 </span><span class="lineNoCov">          0 :         pya *= 2;</span>
+<span class="lineNum">     403 </span><span class="lineNoCov">          0 :         pza *= 2;</span>
+<span class="lineNum">     404 </span>            :     }
+<span class="lineNum">     405 </span>            : 
+<span class="lineNum">     406 </span><span class="lineNoCov">          0 :     return ret/div;</span>
+<span class="lineNum">     407 </span>            : }
+<span class="lineNum">     408 </span>            : 
+<span class="lineNum">     409 </span>            : //---------------------------------------------------------------------
+<span class="lineNum">     410 </span>            : /** 4D float Perlin noise.
+<a name="411"><span class="lineNum">     411 </span>            :  */</a>
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span><span class="lineNoCov">          0 : float noise4D( float x, float y, float z, float w )</span>
+<span class="lineNum">     414 </span>            : {
+<span class="lineNum">     415 </span>            :     int ix0, iy0, iz0, iw0, ix1, iy1, iz1, iw1;
+<span class="lineNum">     416 </span>            :     float fx0, fy0, fz0, fw0, fx1, fy1, fz1, fw1;
+<span class="lineNum">     417 </span>            :     float s, t, r, q;
+<span class="lineNum">     418 </span>            :     float nxyz0, nxyz1, nxy0, nxy1, nx0, nx1, n0, n1;
+<span class="lineNum">     419 </span>            : 
+<span class="lineNum">     420 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     421 </span><span class="lineNoCov">          0 :     iy0 = FASTFLOOR( y ); // Integer part of y</span>
+<span class="lineNum">     422 </span><span class="lineNoCov">          0 :     iz0 = FASTFLOOR( z ); // Integer part of y</span>
+<span class="lineNum">     423 </span><span class="lineNoCov">          0 :     iw0 = FASTFLOOR( w ); // Integer part of w</span>
+<span class="lineNum">     424 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;        // Fractional part of x</span>
+<span class="lineNum">     425 </span><span class="lineNoCov">          0 :     fy0 = y - iy0;        // Fractional part of y</span>
+<span class="lineNum">     426 </span><span class="lineNoCov">          0 :     fz0 = z - iz0;        // Fractional part of z</span>
+<span class="lineNum">     427 </span><span class="lineNoCov">          0 :     fw0 = w - iw0;        // Fractional part of w</span>
+<span class="lineNum">     428 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     429 </span><span class="lineNoCov">          0 :     fy1 = fy0 - 1.0f;</span>
+<span class="lineNum">     430 </span><span class="lineNoCov">          0 :     fz1 = fz0 - 1.0f;</span>
+<span class="lineNum">     431 </span><span class="lineNoCov">          0 :     fw1 = fw0 - 1.0f;</span>
+<span class="lineNum">     432 </span><span class="lineNoCov">          0 :     ix1 = ( ix0 + 1 ) &amp; 0xff;  // Wrap to 0..255</span>
+<span class="lineNum">     433 </span><span class="lineNoCov">          0 :     iy1 = ( iy0 + 1 ) &amp; 0xff;</span>
+<span class="lineNum">     434 </span><span class="lineNoCov">          0 :     iz1 = ( iz0 + 1 ) &amp; 0xff;</span>
+<span class="lineNum">     435 </span><span class="lineNoCov">          0 :     iw1 = ( iw0 + 1 ) &amp; 0xff;</span>
+<span class="lineNum">     436 </span><span class="lineNoCov">          0 :     ix0 = ix0 &amp; 0xff;</span>
+<span class="lineNum">     437 </span><span class="lineNoCov">          0 :     iy0 = iy0 &amp; 0xff;</span>
+<span class="lineNum">     438 </span><span class="lineNoCov">          0 :     iz0 = iz0 &amp; 0xff;</span>
+<span class="lineNum">     439 </span><span class="lineNoCov">          0 :     iw0 = iw0 &amp; 0xff;</span>
+<span class="lineNum">     440 </span>            : 
+<span class="lineNum">     441 </span><span class="lineNoCov">          0 :     q = FADE( fw0 );</span>
+<span class="lineNum">     442 </span><span class="lineNoCov">          0 :     r = FADE( fz0 );</span>
+<span class="lineNum">     443 </span><span class="lineNoCov">          0 :     t = FADE( fy0 );</span>
+<span class="lineNum">     444 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     445 </span>            : 
+<span class="lineNum">     446 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy0 + perm[iz0 + perm[iw0]]]], fx0, fy0, fz0, fw0);</span>
+<span class="lineNum">     447 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy0 + perm[iz0 + perm[iw1]]]], fx0, fy0, fz0, fw1);</span>
+<span class="lineNum">     448 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     449 </span>            : 
+<span class="lineNum">     450 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy0 + perm[iz1 + perm[iw0]]]], fx0, fy0, fz1, fw0);</span>
+<span class="lineNum">     451 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy0 + perm[iz1 + perm[iw1]]]], fx0, fy0, fz1, fw1);</span>
+<span class="lineNum">     452 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     453 </span>            : 
+<span class="lineNum">     454 </span><span class="lineNoCov">          0 :     nx0 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     455 </span>            : 
+<span class="lineNum">     456 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy1 + perm[iz0 + perm[iw0]]]], fx0, fy1, fz0, fw0);</span>
+<span class="lineNum">     457 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy1 + perm[iz0 + perm[iw1]]]], fx0, fy1, fz0, fw1);</span>
+<span class="lineNum">     458 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     459 </span>            : 
+<span class="lineNum">     460 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy1 + perm[iz1 + perm[iw0]]]], fx0, fy1, fz1, fw0);</span>
+<span class="lineNum">     461 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy1 + perm[iz1 + perm[iw1]]]], fx0, fy1, fz1, fw1);</span>
+<span class="lineNum">     462 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     463 </span>            : 
+<span class="lineNum">     464 </span><span class="lineNoCov">          0 :     nx1 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     465 </span>            : 
+<span class="lineNum">     466 </span><span class="lineNoCov">          0 :     n0 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     467 </span>            : 
+<span class="lineNum">     468 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy0 + perm[iz0 + perm[iw0]]]], fx1, fy0, fz0, fw0);</span>
+<span class="lineNum">     469 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy0 + perm[iz0 + perm[iw1]]]], fx1, fy0, fz0, fw1);</span>
+<span class="lineNum">     470 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     471 </span>            : 
+<span class="lineNum">     472 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy0 + perm[iz1 + perm[iw0]]]], fx1, fy0, fz1, fw0);</span>
+<span class="lineNum">     473 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy0 + perm[iz1 + perm[iw1]]]], fx1, fy0, fz1, fw1);</span>
+<span class="lineNum">     474 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     475 </span>            : 
+<span class="lineNum">     476 </span><span class="lineNoCov">          0 :     nx0 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     477 </span>            : 
+<span class="lineNum">     478 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy1 + perm[iz0 + perm[iw0]]]], fx1, fy1, fz0, fw0);</span>
+<span class="lineNum">     479 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy1 + perm[iz0 + perm[iw1]]]], fx1, fy1, fz0, fw1);</span>
+<span class="lineNum">     480 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     481 </span>            : 
+<span class="lineNum">     482 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy1 + perm[iz1 + perm[iw0]]]], fx1, fy1, fz1, fw0);</span>
+<span class="lineNum">     483 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy1 + perm[iz1 + perm[iw1]]]], fx1, fy1, fz1, fw1);</span>
+<span class="lineNum">     484 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     485 </span>            : 
+<span class="lineNum">     486 </span><span class="lineNoCov">          0 :     nx1 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     487 </span>            : 
+<span class="lineNum">     488 </span><span class="lineNoCov">          0 :     n1 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     489 </span>            : 
+<span class="lineNum">     490 </span><span class="lineNoCov">          0 :     return 0.87f * ( LERP( s, n0, n1 ) );</span>
+<span class="lineNum">     491 </span>            : }
+<span class="lineNum">     492 </span>            : 
+<span class="lineNum">     493 </span>            : //---------------------------------------------------------------------
+<span class="lineNum">     494 </span>            : /** 4D float Perlin periodic noise.
+<a name="495"><span class="lineNum">     495 </span>            :  */</a>
+<span class="lineNum">     496 </span>            : 
+<span class="lineNum">     497 </span><span class="lineNoCov">          0 : float pnoise4D(float x, float y, float z, float w, int px, int py, int pz, int pw )</span>
+<span class="lineNum">     498 </span>            : {
+<span class="lineNum">     499 </span>            :     int ix0, iy0, iz0, iw0, ix1, iy1, iz1, iw1;
+<span class="lineNum">     500 </span>            :     float fx0, fy0, fz0, fw0, fx1, fy1, fz1, fw1;
+<span class="lineNum">     501 </span>            :     float s, t, r, q;
+<span class="lineNum">     502 </span>            :     float nxyz0, nxyz1, nxy0, nxy1, nx0, nx1, n0, n1;
+<span class="lineNum">     503 </span>            : 
+<span class="lineNum">     504 </span><span class="lineNoCov">          0 :     ix0 = FASTFLOOR( x ); // Integer part of x</span>
+<span class="lineNum">     505 </span><span class="lineNoCov">          0 :     iy0 = FASTFLOOR( y ); // Integer part of y</span>
+<span class="lineNum">     506 </span><span class="lineNoCov">          0 :     iz0 = FASTFLOOR( z ); // Integer part of y</span>
+<span class="lineNum">     507 </span><span class="lineNoCov">          0 :     iw0 = FASTFLOOR( w ); // Integer part of w</span>
+<span class="lineNum">     508 </span><span class="lineNoCov">          0 :     fx0 = x - ix0;        // Fractional part of x</span>
+<span class="lineNum">     509 </span><span class="lineNoCov">          0 :     fy0 = y - iy0;        // Fractional part of y</span>
+<span class="lineNum">     510 </span><span class="lineNoCov">          0 :     fz0 = z - iz0;        // Fractional part of z</span>
+<span class="lineNum">     511 </span><span class="lineNoCov">          0 :     fw0 = w - iw0;        // Fractional part of w</span>
+<span class="lineNum">     512 </span><span class="lineNoCov">          0 :     fx1 = fx0 - 1.0f;</span>
+<span class="lineNum">     513 </span><span class="lineNoCov">          0 :     fy1 = fy0 - 1.0f;</span>
+<span class="lineNum">     514 </span><span class="lineNoCov">          0 :     fz1 = fz0 - 1.0f;</span>
+<span class="lineNum">     515 </span><span class="lineNoCov">          0 :     fw1 = fw0 - 1.0f;</span>
+<span class="lineNum">     516 </span><span class="lineNoCov">          0 :     ix1 = (( ix0 + 1 ) % px ) &amp; 0xff;  // Wrap to 0..px-1 and wrap to 0..255</span>
+<span class="lineNum">     517 </span><span class="lineNoCov">          0 :     iy1 = (( iy0 + 1 ) % py ) &amp; 0xff;  // Wrap to 0..py-1 and wrap to 0..255</span>
+<span class="lineNum">     518 </span><span class="lineNoCov">          0 :     iz1 = (( iz0 + 1 ) % pz ) &amp; 0xff;  // Wrap to 0..pz-1 and wrap to 0..255</span>
+<span class="lineNum">     519 </span><span class="lineNoCov">          0 :     iw1 = (( iw0 + 1 ) % pw ) &amp; 0xff;  // Wrap to 0..pw-1 and wrap to 0..255</span>
+<span class="lineNum">     520 </span><span class="lineNoCov">          0 :     ix0 = ( ix0 % px ) &amp; 0xff;</span>
+<span class="lineNum">     521 </span><span class="lineNoCov">          0 :     iy0 = ( iy0 % py ) &amp; 0xff;</span>
+<span class="lineNum">     522 </span><span class="lineNoCov">          0 :     iz0 = ( iz0 % pz ) &amp; 0xff;</span>
+<span class="lineNum">     523 </span><span class="lineNoCov">          0 :     iw0 = ( iw0 % pw ) &amp; 0xff;</span>
+<span class="lineNum">     524 </span>            : 
+<span class="lineNum">     525 </span><span class="lineNoCov">          0 :     q = FADE( fw0 );</span>
+<span class="lineNum">     526 </span><span class="lineNoCov">          0 :     r = FADE( fz0 );</span>
+<span class="lineNum">     527 </span><span class="lineNoCov">          0 :     t = FADE( fy0 );</span>
+<span class="lineNum">     528 </span><span class="lineNoCov">          0 :     s = FADE( fx0 );</span>
+<span class="lineNum">     529 </span>            : 
+<span class="lineNum">     530 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy0 + perm[iz0 + perm[iw0]]]], fx0, fy0, fz0, fw0);</span>
+<span class="lineNum">     531 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy0 + perm[iz0 + perm[iw1]]]], fx0, fy0, fz0, fw1);</span>
+<span class="lineNum">     532 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     533 </span>            : 
+<span class="lineNum">     534 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy0 + perm[iz1 + perm[iw0]]]], fx0, fy0, fz1, fw0);</span>
+<span class="lineNum">     535 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy0 + perm[iz1 + perm[iw1]]]], fx0, fy0, fz1, fw1);</span>
+<span class="lineNum">     536 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     537 </span>            : 
+<span class="lineNum">     538 </span><span class="lineNoCov">          0 :     nx0 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     539 </span>            : 
+<span class="lineNum">     540 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy1 + perm[iz0 + perm[iw0]]]], fx0, fy1, fz0, fw0);</span>
+<span class="lineNum">     541 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy1 + perm[iz0 + perm[iw1]]]], fx0, fy1, fz0, fw1);</span>
+<span class="lineNum">     542 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     543 </span>            : 
+<span class="lineNum">     544 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix0 + perm[iy1 + perm[iz1 + perm[iw0]]]], fx0, fy1, fz1, fw0);</span>
+<span class="lineNum">     545 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix0 + perm[iy1 + perm[iz1 + perm[iw1]]]], fx0, fy1, fz1, fw1);</span>
+<span class="lineNum">     546 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span><span class="lineNoCov">          0 :     nx1 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     549 </span>            : 
+<span class="lineNum">     550 </span><span class="lineNoCov">          0 :     n0 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     551 </span>            : 
+<span class="lineNum">     552 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy0 + perm[iz0 + perm[iw0]]]], fx1, fy0, fz0, fw0);</span>
+<span class="lineNum">     553 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy0 + perm[iz0 + perm[iw1]]]], fx1, fy0, fz0, fw1);</span>
+<span class="lineNum">     554 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     555 </span>            : 
+<span class="lineNum">     556 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy0 + perm[iz1 + perm[iw0]]]], fx1, fy0, fz1, fw0);</span>
+<span class="lineNum">     557 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy0 + perm[iz1 + perm[iw1]]]], fx1, fy0, fz1, fw1);</span>
+<span class="lineNum">     558 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     559 </span>            : 
+<span class="lineNum">     560 </span><span class="lineNoCov">          0 :     nx0 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     561 </span>            : 
+<span class="lineNum">     562 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy1 + perm[iz0 + perm[iw0]]]], fx1, fy1, fz0, fw0);</span>
+<span class="lineNum">     563 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy1 + perm[iz0 + perm[iw1]]]], fx1, fy1, fz0, fw1);</span>
+<span class="lineNum">     564 </span><span class="lineNoCov">          0 :     nxy0 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     565 </span>            : 
+<span class="lineNum">     566 </span><span class="lineNoCov">          0 :     nxyz0 = grad4D(perm[ix1 + perm[iy1 + perm[iz1 + perm[iw0]]]], fx1, fy1, fz1, fw0);</span>
+<span class="lineNum">     567 </span><span class="lineNoCov">          0 :     nxyz1 = grad4D(perm[ix1 + perm[iy1 + perm[iz1 + perm[iw1]]]], fx1, fy1, fz1, fw1);</span>
+<span class="lineNum">     568 </span><span class="lineNoCov">          0 :     nxy1 = LERP( q, nxyz0, nxyz1 );</span>
+<span class="lineNum">     569 </span>            : 
+<span class="lineNum">     570 </span><span class="lineNoCov">          0 :     nx1 = LERP ( r, nxy0, nxy1 );</span>
+<span class="lineNum">     571 </span>            : 
+<span class="lineNum">     572 </span><span class="lineNoCov">          0 :     n1 = LERP( t, nx0, nx1 );</span>
+<span class="lineNum">     573 </span>            : 
+<span class="lineNum">     574 </span><span class="lineNoCov">          0 :     return 0.87f * ( LERP( s, n0, n1 ) );</span>
+<span class="lineNum">     575 </span>            : }
+<span class="lineNum">     576 </span>            : 
+<span class="lineNum">     577 </span>            : #endif
+<span class="lineNum">     578 </span>            : //---------------------------------------------------------------------
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

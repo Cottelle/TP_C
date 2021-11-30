@@ -1,0 +1,19 @@
+
+####
+#### Compilation
+####
+gcc -o tests.o -c tests.c -g
+gcc -o str-extract.o -c str-extract.c -g 
+gcc -o tests tests.o str-extract.o -g
+
+####
+#### Execution
+####
+test_1
+Done
+test_2
+Done
+test_3
+Done
+test_4
+Done

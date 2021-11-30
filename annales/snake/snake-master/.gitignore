@@ -1,0 +1,7 @@
+obj/
+bin/
+saves/
+tests/rapport/
+tests/obj/
+tests/rapport.info
+*.gcov
