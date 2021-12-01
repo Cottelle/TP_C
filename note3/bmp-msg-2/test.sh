@@ -93,6 +93,6 @@ fi
 coloredEcho "OK" green
 
 annoncer "Regardons la barre de progression"
-$VALGRIND ./$TARGET -e -m "$(head -n 1000 tests/proust_du_cote_de_chez_swann.txt )" -i tests/cat.bmp -o tests/out.bmp -f 4  2>$LOG || fail              
+$VALGRIND ./$TARGET -e -m "$(head -n 1000 tests/proust_du_cote_de_chez_swann.txt )" -i tests/cat.bmp -o tests/out.bmp -f 4  2>>$LOG || fail              
 coloredEcho "OK?" yellow
 exit 0
