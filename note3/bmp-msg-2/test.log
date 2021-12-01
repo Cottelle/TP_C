@@ -32,30 +32,8 @@ encode action requires an input and output file
 ####
 #### Execution encode
 ####
+[===]
 
 ####
 #### Execution dencode
 ####
-===DIFF===
-
-####
-#### Execution encode where dataSize=0
-####
-
-####
-#### Compression encode 2
-####
-
-####
-#### compression dencode 2
-####
-===DIFF===
-
-####
-#### Compression encode 4
-####
-
-####
-#### compression dencode 4
-####
-===DIFF===
