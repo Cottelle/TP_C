@@ -25,8 +25,4 @@ void strExtract(FILE *in, char *delim, char *buffer, size_t size)
         buffer[i]=c;
     }
     buffer[size]='\0';
-    for (int i = 0; buffer[i] != '\0'; i++)
-    {
-        printf("%c ", buffer[i]);
-    }
 }
