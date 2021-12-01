@@ -52,3 +52,18 @@ encode action requires an input and output file
 ####
 #### compression dencode 2
 ####
+===DIFF===
+
+####
+#### Compression encode 4
+####
+[===]
+
+####
+#### compression dencode 4
+####
+===DIFF===
+
+####
+#### Regardons la barre de progression
+####
